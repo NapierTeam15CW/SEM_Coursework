@@ -12,6 +12,11 @@ public class App
         // Connect to database
         a.connect();
 
+        // Get city
+        City kabul = a.getCity(1);
+        // Display results
+        a.displayCity(kabul);
+
         // Disconnect from database
         a.disconnect();
     }
@@ -112,6 +117,15 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
+        }
+    }
+    public void displayCity(City city) {
+        if(city != null) {
+            System.out.println("ID: "+city.ID+"\n"+
+                               "Name: "+city.Name+"\n"+
+                               "CountryCode: "+city.CountryCode+"\n"+
+                               "District: "+city.District+"\n"+
+                               "Population: "+city.Population+"\n");
         }
     }
 }
