@@ -1,5 +1,7 @@
 #USE CASE: 4 Population Report
+
 ##CHARACTERISTIC INFORMATION
+
 ###Goal in Context
 As an employee of my organisation with basic computer skills, I want to choose from continent, country, or region in order to create a list of the population of people living from my selection, and to list the population of people living in cities and to list people not living in cities. Columns: name, total population, total population living in cities (including percentage value) and total population not living in cities (including a percentage value.
 
