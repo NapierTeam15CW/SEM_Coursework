@@ -36,7 +36,7 @@ A request for list information is sent to the employee.
 
 ## Main Success Scenario
 
-1. Database information is given to employee .
+1. Database information is given to employee.
 2. Employee captures languages such as Chinese, English, Hindi, Spanish and Arabic..
 3. Employee Sorts list with the greatest number to the smallest and will include the percentage of world population.
 4. Employee provides lists of people speaking these languages from greatest to smallest and will include the percentage of the world population..
