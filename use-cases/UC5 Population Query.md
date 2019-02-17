@@ -19,7 +19,7 @@ We need to create SQL queries that can retrieve this data from the database.
 Employees are able to view the data requested by their input.
 
 ### Failed End Condition
-No report is created.
+No data is returned.
 
 ### Primary Actor
 Employee
