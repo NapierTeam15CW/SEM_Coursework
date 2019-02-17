@@ -1,20 +1,18 @@
 @startuml
-:Main Admin: as Admin
-(Use the application) as (Use)
 
-User -> (Start)
-User --> (Use)
-
-Admin ---> (Use)
-
-note right of Admin : This is an example.
-
-note right of (Use)
-A note can also
-be on several lines
-end note
-
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
+actor EMP as "Employee"
+rectangle "App" {
+    usecase UC1 as "Country Report"
+    usecase UC2 as "City Report"
+    usecase UC3 as "Capital City Report"
+    usecase UC4 as "Population Report"
+    usecase UC5 as "Population Query"
+    usecase UC6 as "Language Report"
+    EMP --> UC1
+    EMP --> UC2
+    EMP --> UC3
+    EMP --> UC4
+    EMP --> UC5
+    EMP --> UC6
+}
 @enduml
