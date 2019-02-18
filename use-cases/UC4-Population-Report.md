@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-As an employee of my organisation with basic computer skills, I want to choose from continent, country, or region in order to create a list of the population of people living from my selection, and to list the population of people living in cities and to list people not living in cities. Columns: name, total population, total population living in cities (including percentage value) and total population not living in cities (including a percentage value.
+As an employee of my organisation with basic computer skills, I want to choose from continent, country, or region in order to create a list of the population of people living from my selection, and to list the population of people living in cities and to list people not living in cities. Columns: name, total population, total population living in cities (including percentage value) and total population not living in cities and total population not living in cities.
 
 #### Scope
 
@@ -36,10 +36,9 @@ A request for list information is sent to the employee.
 
 ## Main Success Scenario
 
-1. Database information is given to employee 
-2. Employee selects from either "continent", "country" and region to create list.
-3. Employee Sorts list into people living in cities and not living in cities.
-4. Employee provides lists of people living in cities and not living in cities.
+1. Employee chooses from continent, country or region.
+2. Application requests data from database using SQL statements
+3. Application generates report from returned data
 
 ## Extensions
 
