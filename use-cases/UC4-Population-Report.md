@@ -37,7 +37,7 @@ A request for list information is sent to the employee.
 ## Main Success Scenario
 
 1. Database information is given to employee 
-2. Employee captures continent, country and region to create list.
+2. Employee selects from either "continent", "country" and region to create list.
 3. Employee Sorts list into people living in cities and not living in cities.
 4. Employee provides lists of people living in cities and not living in cities.
 
