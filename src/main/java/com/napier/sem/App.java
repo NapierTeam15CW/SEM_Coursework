@@ -2,8 +2,16 @@ package com.napier.sem;
 
 import java.sql.*;
 
+/**
+ * App class
+ *
+ * Class containing functions to produce reports
+ */
 public class App
 {
+    /**
+     * Main method for app
+     */
     public static void main(String[] args)
     {
         // Create new Application
@@ -20,6 +28,7 @@ public class App
         // Disconnect from database
         a.disconnect();
     }
+
     /**
      * Connection to MySQL database.
      */
@@ -85,6 +94,12 @@ public class App
         }
     }
 
+    /**
+     * Get City
+     *
+     * Method returns city object, based on the city
+     * ID provided by the user
+     */
     public City getCity(int ID) {
         try
         {
@@ -119,6 +134,14 @@ public class App
             return null;
         }
     }
+
+    /**
+     * Display City
+     *
+     * Method returns information stored by a city
+     * object, based on the city object provided to the
+     * method
+     */
     public void displayCity(City city) {
         if(city != null) {
             System.out.println("ID: "+city.ID+"\n"+
