@@ -38,5 +38,5 @@ public class Country
     /**
      * Capital of the country
      */
-    public String capital;
+    public int capital;
 }
