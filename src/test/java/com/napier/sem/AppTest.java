@@ -28,4 +28,12 @@ public class AppTest {
         ArrayList<Country> countries = new ArrayList<>();
         app.displayCountries(countries);
     }
+
+    @Test
+    void displayCountriesTestContainsNull()
+    {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.displayCountries(countries);
+    }
 }
