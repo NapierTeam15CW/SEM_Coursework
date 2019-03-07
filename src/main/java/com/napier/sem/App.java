@@ -96,10 +96,9 @@ public class App
     }
 
     /**
-     * Get City
-     *
-     * Method returns city object, based on the city
-     * ID provided by the user
+     * Gets a city from the database with the ID given
+     * @param ID the ID of the city to be fetched
+     * @return city object, based on the city
      */
     public City getCity(int ID) {
         try
@@ -137,11 +136,10 @@ public class App
     }
 
     /**
-     * Display City
-     *
      * Method returns information stored by a city
      * object, based on the city object provided to the
      * method
+     * @param city the city to be displayed
      */
     public void displayCity(City city) {
         if(city != null) {
