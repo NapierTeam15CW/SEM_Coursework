@@ -28,6 +28,20 @@ public class App
 
         // Disconnect from database
         a.disconnect();
+
+        // Create city list
+        ArrayList<Country> countries = new ArrayList<>();
+        Country aruba = new Country();
+        aruba.code = "ABW";
+        aruba.name = "Aruba";
+        aruba.continent = "North America";
+        aruba.region = "Caribbean";
+        aruba.population = 103000;
+        aruba.capital_name = "Oranjestad";
+        countries.add(aruba);
+
+        // Display country list
+        a.displayCountries(countries);
     }
 
     /**
@@ -157,6 +171,14 @@ public class App
      * @param countries the countries given
      */
     public void displayCountries(ArrayList<Country> countries) {
-
+        String header_format = "%-4s %-15s %-15s %-15s %-10s %-10s";
+        String headers = String.format(header_format,"Code","Name","Continent","Region","Population","Capital City");
+        System.out.println(headers);
+        for(Country country : countries) {
+            String record_format = "%-4s %-15s %-15s %-15s %-10d %-10s";
+            String country_string =
+                    String.format(record_format, country.code,country.name,country.continent, country.region, country.population, country.capital_name);
+            System.out.println(country_string);
+        }
     }
 }
