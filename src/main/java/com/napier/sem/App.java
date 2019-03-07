@@ -182,4 +182,13 @@ public class App
             System.out.println(country_string);
         }
     }
+
+    /**
+     * Gets all countries organised by largest
+     * population to smallest
+     * @return List of countries organised from largest to smallest population
+     */
+    public ArrayList<Country> getAllCountries() {
+        return null;
+    }
 }
