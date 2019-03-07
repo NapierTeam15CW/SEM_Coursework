@@ -211,4 +211,14 @@ public class App
     public ArrayList<Country> getAllCountriesInRegion(String region) {
         return null;
     }
+
+    /**
+     * Gets all countries within SQL condition
+     *
+     * @param condition the SQL condition
+     * @return List of countries
+     */
+    public ArrayList<Country> getCountries(String condition) {
+        return null;
+    }
 }
