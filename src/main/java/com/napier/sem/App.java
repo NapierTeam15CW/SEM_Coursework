@@ -150,4 +150,13 @@ public class App
                                "Population: "+city.Population+"\n");
         }
     }
+
+    /**
+     * Displays the code, name, continent, region,
+     * population and capital city of all countries given
+     * @param countries the countries given
+     */
+    public void displayCountries(ArrayList<Country> countries) {
+
+    }
 }
