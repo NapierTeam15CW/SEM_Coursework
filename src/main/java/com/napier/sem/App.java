@@ -185,6 +185,8 @@ public class App
 
         // Loop through countries and display
         for(Country country : countries) {
+            if(country == null)
+                continue;
             String record_format = "%-4s %-15s %-15s %-15s %-10d %-10s";
             String country_string =
                     String.format(record_format, country.code,country.name,country.continent, country.region, country.population, country.capital_name);
