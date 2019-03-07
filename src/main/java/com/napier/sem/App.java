@@ -28,20 +28,6 @@ public class App
 
         // Disconnect from database
         a.disconnect();
-
-        // Create country list
-        ArrayList<Country> countries = new ArrayList<>();
-        Country aruba = new Country();
-        aruba.code = "ABW";
-        aruba.name = "Aruba";
-        aruba.continent = "North America";
-        aruba.region = "Caribbean";
-        aruba.population = 103000;
-        aruba.capital_name = "Oranjestad";
-        countries.add(aruba);
-
-        // Display country list
-        a.displayCountries(countries);
     }
 
     /**
