@@ -29,7 +29,7 @@ public class App
         // Disconnect from database
         a.disconnect();
 
-        // Create city list
+        // Create country list
         ArrayList<Country> countries = new ArrayList<>();
         Country aruba = new Country();
         aruba.code = "ABW";
