@@ -1,0 +1,37 @@
+@startuml
+
+rectangle "Company"{
+    actor EMP as "Employee"
+}
+
+rectangle AP as "App" {
+    usecase UC1 as "Country Report"
+    usecase UC2 as "City Report"
+    usecase UC3 as "Capital City Report"
+    usecase UC4 as "Population Report"
+    usecase UC5 as "Population Query"
+    usecase UC6 as "Language Report"
+    EMP --> UC1
+    EMP --> UC2
+    EMP --> UC3
+    EMP --> UC4
+    EMP --> UC5
+    EMP --> UC6
+}
+
+rectangle RE as "Request"{
+    UC1 -- RE
+    UC2 -- RE
+    UC3 -- RE
+    UC4 -- RE
+    UC5 -- RE
+    UC6 -- RE
+}
+
+rectangle DB as "Database" {
+    RE <--> DB
+}
+
+
+
+@enduml
