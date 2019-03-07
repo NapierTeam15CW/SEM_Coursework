@@ -171,6 +171,11 @@ public class App
      * @param countries the countries given
      */
     public void displayCountries(ArrayList<Country> countries) {
+        if(countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
         String header_format = "%-4s %-15s %-15s %-15s %-10s %-10s";
         String headers = String.format(header_format,"Code","Name","Continent","Region","Population","Capital City");
         System.out.println(headers);
