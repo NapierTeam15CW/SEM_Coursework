@@ -36,7 +36,12 @@ public class Country
     public int population;
 
     /**
-     * Capital of the country
+     * Capital city code
      */
-    public int capital;
+    public int capital_code;
+
+    /**
+     * Capital city name
+     */
+    public String capital_name;
 }
