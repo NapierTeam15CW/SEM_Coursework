@@ -201,4 +201,14 @@ public class App
     public ArrayList<Country> getAllCountriesInContinent(String continent) {
         return null;
     }
+
+    /**
+     * Gets all countries in a region organised
+     * from largest population to smallest
+     * @param region the region the countries are in
+     * @return List of countries in a region
+     */
+    public ArrayList<Country> getAllCountriesInRegion(String region) {
+        return null;
+    }
 }
