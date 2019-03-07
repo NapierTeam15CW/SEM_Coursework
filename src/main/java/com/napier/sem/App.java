@@ -157,7 +157,7 @@ public class App
      * @param countries the countries given
      */
     public void displayCountries(ArrayList<Country> countries) {
-        // Check employees is not null
+        // Check countries is not null
         if(countries == null)
         {
             System.out.println("No countries");
@@ -169,10 +169,13 @@ public class App
         String headers = String.format(header_format,"Code","Name","Continent","Region","Population","Capital City");
         System.out.println(headers);
 
-        // Loop through countries and display
+        // Loop through countries and print
         for(Country country : countries) {
+            // Check country is not null
             if(country == null)
                 continue;
+
+            // Print country
             String record_format = "%-4s %-15s %-15s %-15s %-10d %-10s";
             String country_string =
                     String.format(record_format, country.code,country.name,country.continent, country.region, country.population, country.capital_name);
