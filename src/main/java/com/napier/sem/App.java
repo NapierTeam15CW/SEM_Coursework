@@ -27,7 +27,7 @@ public class App
         a.displayCity(kabul);
 
         // Get Countries
-        ArrayList<Country> countries = a.getAllCountriesInRegion("Middle East");
+        ArrayList<Country> countries = a.getCountries("",10);
 
         // Display countries
         a.displayCountries(countries);
@@ -226,22 +226,25 @@ public class App
     }
 
     /**
-     * Gets all countries within SQL condition
+     * Gets some or all countries within SQL condition
      *
      * @param condition the SQL condition
+     * @param limit the number of results to return. If less than zero, returns all results
      * @return List of countries
      */
-    public ArrayList<Country> getCountries(String condition) {
+    public ArrayList<Country> getCountries(String condition, int limit) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
+            String limitCondition = (limit>0)?"LIMIT "+limit+"\n":""; // Limit results if limit is positive and nonzero
             String strSelect =
                     "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name\n"+
                             "FROM country\n"+
                             "JOIN city ON country.Capital = city.ID\n"+
                             condition+
-                            "ORDER BY country.population DESC\n";
+                            "ORDER BY country.population DESC\n"+
+                            limitCondition;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract Country information
@@ -265,5 +268,14 @@ public class App
             System.out.println("Failed to get country details");
             return null;
         }
+    }
+    /**
+     * Gets all countries within SQL condition
+     *
+     * @param condition the SQL condition
+     * @return List of countries
+     */
+    public ArrayList<Country> getCountries(String condition) {
+        return getCountries(condition, -1);
     }
 }
