@@ -181,10 +181,17 @@ public class App
             if(country == null)
                 continue;
 
+            // If the string is bigger than the column,
+            // clip the string.
+            String name = (country.name.length()>15)?country.name.substring(0,15):country.name;
+            String continent = (country.continent.length()>15)?country.continent.substring(0,15):country.continent;
+            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;;
+            String capital = (country.capital_name.length()>15)?country.capital_name.substring(0,10):country.capital_name;
+
             // Print country
             String record_format = "%-4s %-15s %-15s %-15s %-10d %-10s";
             String country_string =
-                    String.format(record_format, country.code,country.name,country.continent, country.region, country.population, country.capital_name);
+                    String.format(record_format, country.code, name, continent, region, country.population, capital);
             System.out.println(country_string);
         }
     }
