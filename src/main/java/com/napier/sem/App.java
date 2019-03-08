@@ -27,7 +27,7 @@ public class App
         a.displayCity(kabul);
 
         // Get Countries
-        ArrayList<Country> countries = a.getAllCountriesInContinent("Asia");
+        ArrayList<Country> countries = a.getAllCountriesInRegion("Middle East");
 
         // Display countries
         a.displayCountries(countries);
@@ -222,7 +222,7 @@ public class App
      * @return List of countries in a region
      */
     public ArrayList<Country> getAllCountriesInRegion(String region) {
-        return null;
+        return getCountries("WHERE country.Region = '"+region+"'\n");
     }
 
     /**
