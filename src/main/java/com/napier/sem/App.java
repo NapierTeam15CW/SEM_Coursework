@@ -26,6 +26,12 @@ public class App
         // Display results
         a.displayCity(kabul);
 
+        // Get Countries
+        ArrayList<Country> countries = a.getAllCountries();
+
+        // Display countries
+        a.displayCountries(countries);
+
         // Disconnect from database
         a.disconnect();
     }
@@ -189,7 +195,7 @@ public class App
      * @return List of countries organised from largest to smallest population
      */
     public ArrayList<Country> getAllCountries() {
-        return null;
+        return getCountries("");
     }
 
     /**
@@ -219,6 +225,38 @@ public class App
      * @return List of countries
      */
     public ArrayList<Country> getCountries(String condition) {
-        return null;
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name\n"+
+                            "FROM country\n"+
+                            "JOIN city ON country.Capital = city.ID\n"+
+                            condition+
+                            "ORDER BY country.population DESC\n";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract Country information
+            ArrayList<Country> countries = new ArrayList<>();
+            while (rset.next())
+            {
+                Country country = new Country();
+                country.code = rset.getString("country.Code");
+                country.name = rset.getString("country.Name");
+                country.continent = rset.getString("country.Continent");
+                country.region = rset.getString("country.Region");
+                country.population = rset.getInt("country.Population");
+                country.capital_name = rset.getString("city.Name");
+                countries.add(country);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
     }
 }
