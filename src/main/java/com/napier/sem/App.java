@@ -27,7 +27,7 @@ public class App
         a.displayCity(kabul);
 
         // Get Countries
-        ArrayList<Country> countries = a.getCountriesInContinent("Asia",5);
+        ArrayList<Country> countries = a.getCountriesInRegion("Eastern Asia",5);
 
         // Display countries
         a.displayCountries(countries);
@@ -245,6 +245,19 @@ public class App
      */
     public ArrayList<Country> getAllCountriesInRegion(String region) {
         return getCountries("WHERE country.Region = '"+region+"'\n");
+    }
+
+    /**
+     * Gets top countries most populous countries in a region
+     * organised from largest to smallest. The number of
+     * countries returned is given by "limit".
+     * The number of countries returned is limited by "limit"
+     * @param region the region the countries are in
+     * @param limit the number of results to return
+     * @return List of top most populous countries in a region
+     */
+    public ArrayList<Country> getCountriesInRegion(String region, int limit) {
+        return getCountries("WHERE country.Region = '"+region+"'\n", limit);
     }
 
     /**
