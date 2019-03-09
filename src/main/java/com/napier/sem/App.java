@@ -185,7 +185,7 @@ public class App
             // clip the string.
             String name = (country.name.length()>15)?country.name.substring(0,15):country.name;
             String continent = (country.continent.length()>15)?country.continent.substring(0,15):country.continent;
-            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;;
+            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;
             String capital = (country.capital_name.length()>15)?country.capital_name.substring(0,10):country.capital_name;
 
             // Print country
@@ -313,4 +313,13 @@ public class App
     public ArrayList<Country> getCountries(String condition) {
         return getCountries(condition, -1);
     }
+
+    /**
+     * Method takes sql statement and returns list of languages
+     */
+    public ArrayList<CountryLanguage> getLanguages()
+    {
+        return null;
+    }
+
 }
