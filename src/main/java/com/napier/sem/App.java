@@ -27,7 +27,7 @@ public class App
         a.displayCity(kabul);
 
         // Get Countries
-        ArrayList<Country> countries = a.getCountries("",10);
+        ArrayList<Country> countries = a.getCountries(10);
 
         // Display countries
         a.displayCountries(countries);
@@ -203,6 +203,16 @@ public class App
      */
     public ArrayList<Country> getAllCountries() {
         return getCountries("");
+    }
+
+    /**
+     * Gets the top most populous countries.
+     * The number of countries returned is given by the user.
+     * @param
+     * @return List of countries organised from largest to smallest population
+     */
+    public ArrayList<Country> getCountries(int limit) {
+        return getCountries("", limit);
     }
 
     /**
