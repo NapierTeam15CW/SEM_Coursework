@@ -207,8 +207,8 @@ public class App
 
     /**
      * Gets the top most populous countries.
-     * The number of countries returned is given by the user.
-     * @param
+     * The number of countries returned is given by the user
+     * @param limit the number of countries to be returned
      * @return List of countries organised from largest to smallest population
      */
     public ArrayList<Country> getCountries(int limit) {
