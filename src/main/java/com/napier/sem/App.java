@@ -27,7 +27,7 @@ public class App
         a.displayCity(kabul);
 
         // Get Countries
-        ArrayList<Country> countries = a.getCountries(10);
+        ArrayList<Country> countries = a.getCountriesInContinent("Asia",5);
 
         // Display countries
         a.displayCountries(countries);
@@ -223,6 +223,18 @@ public class App
      */
     public ArrayList<Country> getAllCountriesInContinent(String continent) {
         return getCountries("WHERE country.Continent = '"+continent+"'\n");
+    }
+
+    /**
+     * Gets a number of countries in a continent organised
+     * from largest population to smallest
+     * The number of countries returned is specified by the user.
+     * @param continent the continent the countries belong to
+     * @param limit the number of countries to be returned
+     * @return List of top most populous countries in a continent
+     */
+    public ArrayList<Country> getCountriesInContinent(String continent, int limit) {
+        return getCountries("WHERE country.Continent = '"+continent+"'\n", limit);
     }
 
     /**
