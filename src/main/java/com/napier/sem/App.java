@@ -26,11 +26,41 @@ public class App
         // Display results
         a.displayCity(kabul);
 
-        // Get Countries
-        ArrayList<Country> countries = a.getCountriesInRegion("Eastern Asia",5);
+//        // Get Countries
+//        ArrayList<Country> countries = a.getCountriesInRegion("Eastern Asia",5);
+//
+//        // Display countries
+//        a.displayCountries(countries);
 
+        // Get Countries
+        ArrayList<City> cities1 = a.getCitiesRegion("Eastern Asia",5);
         // Display countries
-        a.displayCountries(countries);
+        a.displayCities(cities1);
+        System.out.println();
+
+        // Get Countries
+        ArrayList<City> cities2 = a.getCitiesDistrict("Inner Mongolia",3);
+        // Display countries
+        a.displayCities(cities2);
+        System.out.println();
+
+        // Get Countries
+        ArrayList<City> cities3 = a.getCitiesCountry("United Kingdom",15);
+        // Display countries
+        a.displayCities(cities3);
+        System.out.println();
+
+        // Get Countries
+        ArrayList<City> cities4 = a.getCitiesContinent("Africa",10);
+        // Display countries
+        a.displayCities(cities4);
+        System.out.println();
+
+        // Get Countries
+        ArrayList<City> cities5 = a.getCities("",5);
+        // Display countries
+        a.displayCities(cities5);
+        System.out.println();
 
         // Disconnect from database
         a.disconnect();
@@ -185,7 +215,7 @@ public class App
             // clip the string.
             String name = (country.name.length()>15)?country.name.substring(0,15):country.name;
             String continent = (country.continent.length()>15)?country.continent.substring(0,15):country.continent;
-            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;
+            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;;
             String capital = (country.capital_name.length()>15)?country.capital_name.substring(0,10):country.capital_name;
 
             // Print country
@@ -314,12 +344,156 @@ public class App
         return getCountries(condition, -1);
     }
 
+
     /**
-     * Method takes sql statement and returns list of languages
+     * Method searches through the database and returns a list
+     * of all cities that are in the world
+     *
+     * Results obtained can also be limited
      */
-    public ArrayList<CountryLanguage> getLanguages()
+    public ArrayList<City> getCities(String searchCondition, int limitResult)
     {
-        return null;
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.Name, country.Name, city.District, city.Population "
+                            + "FROM country "
+                            + "JOIN city ON country.Code = city.CountryCode "
+                            + searchCondition
+                            + "ORDER BY city.population DESC ";
+            if(limitResult > 0)
+            {
+                strSelect = strSelect + "LIMIT " + limitResult + " ";
+            }
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract Country information
+            ArrayList<City> cities = new ArrayList<>();
+            while (rset.next())
+            {
+                City city = new City();
+                city.Name = rset.getString("city.Name");
+                city.CountryName = rset.getString("country.Name");
+                city.District = rset.getString("city.District");
+                city.Population = rset.getInt("city.Population");
+                cities.add(city);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get list of cities and details");
+            return null;
+        }
     }
 
+    /**
+     * Method searches through the database and returns a list
+     * of all cities that are in a specific continent
+     *
+     * Results obtained can also be limited
+     */
+    public ArrayList<City> getCitiesContinent(String aContinent, int aLimit)
+    {
+        String searchCondition = "WHERE country.Continent = '" + aContinent + "'";
+
+        return getCities(searchCondition, aLimit);
+    }
+
+    /**
+     * Method searches through the database and returns a list
+     * of all cities that are in a specific region
+     *
+     * Results obtained can also be limited
+     */
+    public ArrayList<City> getCitiesRegion(String aRegion, int aLimit)
+    {
+        String searchCondition = "WHERE country.Region = '" + aRegion + "'";
+
+        return getCities(searchCondition, aLimit);
+    }
+
+    /**
+     * Method searches through the database and returns a list
+     * of all cities that are in a specific country
+     *
+     * Results obtained can also be limited
+     */
+    public ArrayList<City> getCitiesCountry(String aCountry, int aLimit)
+    {
+        String searchCondition = "WHERE country.Name = '" + aCountry + "'";
+
+        return getCities(searchCondition, aLimit);
+    }
+
+    /**
+     * Method searches through the database and returns a list
+     * of all cities that are in a specific district
+     *
+     * Results obtained can also be limited
+     */
+    public ArrayList<City> getCitiesDistrict(String aDistrict, int aLimit)
+    {
+        String searchCondition = "WHERE city.District = '" + aDistrict + "'";
+
+        return getCities(searchCondition, aLimit);
+    }
+
+    /**
+     * Displays the city name, country where city belongs, district
+     * of the country where the city is found and the
+     * population of the city.
+     */
+    public void displayCities(ArrayList<City> cities)
+    {
+        // Check cities list is populated with valies
+        if(cities == null)
+        {
+            System.out.println("No cities found");
+            return;
+        }
+
+        //Length limits of values from SQL database
+        int cityNameLength = 35;
+        int countryNameLength = 38;
+        int districtNameLength = 20;
+        int populationNumberLength = 11;
+
+        // Print header
+        String headerFormat = "%-"
+                + cityNameLength + "s %-"
+                + countryNameLength + "s %-"
+                + districtNameLength + "s %-"
+                + populationNumberLength + "s";
+        String headers = String.format(headerFormat, "City Name", "Country", "District", "Population");
+        System.out.println(headers);
+
+        // Print details of each city in list
+        for(City city : cities)
+        {
+
+            // Check city in the list is not null
+            if(city == null)
+                continue;
+
+            // Check if strings are longer than
+            // the column and trim if they are
+            String name = (city.Name.length() > cityNameLength) ? city.Name.substring(0, cityNameLength) : city.Name;
+            String country = (city.CountryName.length() > countryNameLength) ? city.CountryName.substring(0, countryNameLength) : city.CountryName;
+            String district = (city.District.length() > districtNameLength) ? city.District.substring(0 , districtNameLength) : city.District;
+
+            // Print city details
+            String recordFormat = "%-"
+                    + cityNameLength + "s %-"
+                    + countryNameLength + "s %-"
+                    + districtNameLength + "s %-"
+                    + populationNumberLength + "s";
+            String cityString =
+                    String.format(recordFormat, name, country, district, city.Population);
+            System.out.println(cityString);
+        }
+    }
 }
