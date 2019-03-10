@@ -28,6 +28,12 @@ public class City
     public String CountryCode;
 
     /**
+     * Code of country where city is found
+     */
+    public String CountryName;
+
+
+    /**
      * District where city is found
      */
     public String District;
