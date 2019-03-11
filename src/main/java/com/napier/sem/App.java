@@ -1,8 +1,5 @@
 package com.napier.sem;
 
-import com.sun.javafx.scene.layout.region.Margins;
-import com.sun.xml.internal.ws.commons.xmlutil.Converter;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -500,22 +497,58 @@ public class App
         }
     }
 
-    public ArrayList<CountryLanguage> getLanguage(String searchCondition, int limit)
+    public Country getCountryDetails(String aCountry)
     {
+        try
+        {
+            Country country = new Country();
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name "
+                            + "FROM country "
+                            + "WHERE country.Name = '" + aCountry + "' ";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract Country information
+
+            while (rset.next())
+            {
+                country.code = rset.getString("country.Code");
+                country.name = rset.getString("country.Name");
+
+            }
+            return country;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+
+    /**
+     * Returns a list of languages for a given country
+     */
+
+    public ArrayList<CountryLanguage> getLanguage(Country aCountry)
+    {
+
+        String countryName = aCountry.name;
         try
         {
             Statement s = con.createStatement();
 
             String strSelect =
-                    "SELECT country.Name, country.Language" +
-                            "FROM country" +
-                            searchCondition +
-                            "ORDER BY country.population DESC ";
+                    "SELECT country.Name, countryLanguage.Language, countryLanguage.percentage"
+                            + "FROM country JOIN countryLanguage ON (country.Code = countryLanguage.CountryCode)"
+                            + "WHERE country.Name = '" + aCountry.name + "' "
+                            + "AND countryLanguage.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')"
+                            + "ORDER BY countryLanguage.Language ";
 
-            if (limit > 0)
-            {
-                strSelect = strSelect + "LIMIT" + limit + " ";
-            }
 
             ResultSet r = s.executeQuery(strSelect);
 
@@ -539,27 +572,27 @@ public class App
             return null;
         }
     }
-
-    public ArrayList<CountryLanguage> getLanguagesContinent(String continent, int limit)
-    {
-        String condition = "WHERE country.Continent = '" + continent + "'";
-
-        return getLanguage(condition, limit);
-    }
-
-    public ArrayList<CountryLanguage> getLanguagesRegion(String region, int limit)
-    {
-        String condition = "WHERE country.Regon = '" + region + "'";
-
-        return getLanguage(condition, limit);
-    }
-
-    public ArrayList<CountryLanguage> getLanguagesCountry(String country, int limit)
-    {
-        String condition = "WHERE country.Name = '" + country + "'";
-
-        return getLanguage(condition, limit);
-    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesContinent(String continent, int limit)
+//    {
+//        String condition = "WHERE country.Continent = '" + continent + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesRegion(String region, int limit)
+//    {
+//        String condition = "WHERE country.Regon = '" + region + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesCountry(String country, int limit)
+//    {
+//        String condition = "WHERE country.Name = '" + country + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
 
     public void displayLanguages(ArrayList<CountryLanguage> languages)
     {
@@ -589,4 +622,5 @@ public class App
             System.out.println(languageString);
         }
     }
+
 }
