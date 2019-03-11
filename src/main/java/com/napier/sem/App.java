@@ -19,7 +19,7 @@ public class App
         App a = new App();
 
         // Connect to database
-        a.connect("db");
+        a.connect("localhost:33060");
 
         // Get city
         City kabul = a.getCity(1);
@@ -79,7 +79,7 @@ public class App
         try
         {
             // Load Database driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
@@ -96,7 +96,7 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -111,7 +111,6 @@ public class App
             }
         }
     }
-
     /**
      * Disconnect from the MySQL database.
      */
