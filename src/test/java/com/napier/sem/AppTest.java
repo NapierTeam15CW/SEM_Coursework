@@ -131,7 +131,7 @@ public class AppTest {
         testCity2.CountryName = "Bulgaria";
         testCity2.Population = 333333;
 
-        testCity3.Name = "Racoon City";
+        testCity3.Name = "Racoon City"; /** YES XD **/
         testCity3.District = "Missouri";
         testCity3.CountryName = "North America";
         testCity3.Population = 1234321;
@@ -150,4 +150,93 @@ public class AppTest {
         // Invoking displayCities method with city list
         app.displayCities(cities);
     }
+
+    /**
+     * Method tests the displayLanguages method
+     * by using a null value
+     */
+    @Test
+    void displayLanguagesNull()
+    {
+        app.displayLanguages(null);
+    }
+
+    /**
+     * Method tests the displayLanguages method by using
+     * a language list with no entries
+     */
+    @Test
+    void displayLanguagesEmptyList()
+    {
+        ArrayList<CountryLanguage> languages = new ArrayList<>();
+
+        app.displayLanguages(languages);
+    }
+
+    /**
+     * Method tests the displayLanguages method
+     * by using a language list that only has
+     * one null entry
+     */
+    @Test
+    void displayLanguagesWithNullLanguage()
+    {
+        ArrayList<CountryLanguage> languages = new ArrayList<>();
+
+        languages.add(null);
+
+        app.displayLanguages(languages);
+    }
+
+    /**
+     * Method tests the displayLanguages method
+     * by using a list of languages with test data
+     */
+    @Test
+    void displayLanguagesWithValues()
+    {
+        ArrayList<CountryLanguage> languages = new ArrayList<>();
+
+        CountryLanguage testLanguage1 = new CountryLanguage();
+        CountryLanguage testLanguage2 = new CountryLanguage();
+        CountryLanguage testLanguage3 = new CountryLanguage();
+        CountryLanguage testLanguage4 = new CountryLanguage();
+        CountryLanguage testLanguage5 = new CountryLanguage();
+
+        testLanguage1.code = "123";
+        testLanguage1.language = "English";
+        testLanguage1.isOfficial = true;
+        testLanguage1.percentage = 0.9f;
+
+        testLanguage2.code = "456";
+        testLanguage2.language = "Spanish";
+        testLanguage2.isOfficial = false;
+        testLanguage2.percentage = 0.89f;
+
+        testLanguage3.code = "789";
+        testLanguage3.language = "Madarin";
+        testLanguage3.isOfficial = true;
+        testLanguage3.percentage = 0.5f;
+
+        testLanguage4.code = "321";
+        testLanguage4.language = "Yiddish";
+        testLanguage4.isOfficial = false;
+        testLanguage4.percentage = 0.6f;
+
+        testLanguage5.code = "654";
+        testLanguage5.language = "Gaelic";
+        testLanguage5.isOfficial = false;
+        testLanguage5.percentage = 0.1f;
+
+        languages.add(testLanguage1);
+        languages.add(testLanguage2);
+        languages.add(testLanguage3);
+        languages.add(testLanguage4);
+        languages.add(testLanguage5);
+
+        app.displayLanguages(languages);
+    }
+
+
+
 }

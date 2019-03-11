@@ -1,5 +1,8 @@
 package com.napier.sem;
 
+import com.sun.javafx.scene.layout.region.Margins;
+import com.sun.xml.internal.ws.commons.xmlutil.Converter;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -494,6 +497,96 @@ public class App
             String cityString =
                     String.format(recordFormat, name, country, district, city.Population);
             System.out.println(cityString);
+        }
+    }
+
+    public ArrayList<CountryLanguage> getLanguage(String searchCondition, int limit)
+    {
+        try
+        {
+            Statement s = con.createStatement();
+
+            String strSelect =
+                    "SELECT country.Name, country.Language" +
+                            "FROM country" +
+                            searchCondition +
+                            "ORDER BY country.population DESC ";
+
+            if (limit > 0)
+            {
+                strSelect = strSelect + "LIMIT" + limit + " ";
+            }
+
+            ResultSet r = s.executeQuery(strSelect);
+
+            ArrayList<CountryLanguage> languages = new ArrayList<>();
+            while(r.next())
+            {
+                CountryLanguage language = new CountryLanguage();
+                language.code = r.getString("language.Code");
+                language.isOfficial = r.getBoolean("language.IsOfficial");
+                language.language = r.getString("language.Name");
+                language.percentage = r.getFloat("language.Percentage");
+                languages.add(language);
+            }
+
+            return languages;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get list of languages");
+            return null;
+        }
+    }
+
+    public ArrayList<CountryLanguage> getLanguagesContinent(String continent, int limit)
+    {
+        String condition = "WHERE country.Continent = '" + continent + "'";
+
+        return getLanguage(condition, limit);
+    }
+
+    public ArrayList<CountryLanguage> getLanguagesRegion(String region, int limit)
+    {
+        String condition = "WHERE country.Regon = '" + region + "'";
+
+        return getLanguage(condition, limit);
+    }
+
+    public ArrayList<CountryLanguage> getLanguagesCountry(String country, int limit)
+    {
+        String condition = "WHERE country.Name = '" + country + "'";
+
+        return getLanguage(condition, limit);
+    }
+
+    public void displayLanguages(ArrayList<CountryLanguage> languages)
+    {
+        if (languages == null)
+        {
+            System.out.println("No Languages found");
+            return;
+        }
+
+        for(CountryLanguage l : languages)
+        {
+            if(l == null)
+            {
+                continue;
+            }
+
+            String id = l.code;
+            String language = l.language;
+            boolean isOfficial = l.isOfficial;
+            float percentage = l.percentage;
+
+            String languageString = id + " " +
+                    language +  " " +
+                    isOfficial +  " " +
+                    percentage + "% ";
+
+            System.out.println(languageString);
         }
     }
 }
