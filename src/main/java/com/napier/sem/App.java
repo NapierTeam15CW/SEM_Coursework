@@ -19,7 +19,7 @@ public class App
         App a = new App();
 
         // Connect to database
-        a.connect();
+        a.connect("localhost:33060");
 
         // Get city
         City kabul = a.getCity(1);
@@ -32,31 +32,31 @@ public class App
 //        // Display countries
 //        a.displayCountries(countries);
 
-        // Get Countries
+        // Get Cities by Region - Limited to top 5
         ArrayList<City> cities1 = a.getCitiesRegion("Eastern Asia",5);
         // Display countries
         a.displayCities(cities1);
         System.out.println();
 
-        // Get Countries
+        // Get Cities by District - Limited to top 3
         ArrayList<City> cities2 = a.getCitiesDistrict("Inner Mongolia",3);
         // Display countries
         a.displayCities(cities2);
         System.out.println();
 
-        // Get Countries
+        // Get Cities by Country - Limited to top 15
         ArrayList<City> cities3 = a.getCitiesCountry("United Kingdom",15);
         // Display countries
         a.displayCities(cities3);
         System.out.println();
 
-        // Get Countries
+        // Get Cities by Continent - limited to top 10
         ArrayList<City> cities4 = a.getCitiesContinent("Africa",10);
         // Display countries
         a.displayCities(cities4);
         System.out.println();
 
-        // Get Countries
+        // Get Cities (all) - Limited to top 5
         ArrayList<City> cities5 = a.getCities("",5);
         // Display countries
         a.displayCities(cities5);
@@ -74,12 +74,12 @@ public class App
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
+    public void connect(String location)
     {
         try
         {
             // Load Database driver
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
@@ -96,7 +96,7 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
