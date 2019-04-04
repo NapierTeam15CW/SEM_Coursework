@@ -310,12 +310,24 @@ public class App
     }
 
     /**
+     * Returns a list of cities
+     * List can be limited
+     * @param limitResult the size of the list returned
+     * @return
+     */
+    @RequestMapping("cities")
+    public ArrayList<City> getCities(@RequestParam(value="limit",defaultValue = "-1") String limitResult)
+    {
+        return getCities("",limitResult);
+    }
+
+    /**
      * Method searches through the database and returns a list
      * of all cities that are in the world
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCities(String searchCondition, int limitResult)
+    public ArrayList<City> getCities(String searchCondition, String limitResult)
     {
         try {
             // Create an SQL statement
@@ -327,7 +339,7 @@ public class App
                             + "JOIN city ON country.Code = city.CountryCode "
                             + searchCondition
                             + "ORDER BY city.population DESC ";
-            if(limitResult > 0)
+            if(!limitResult.equals("-1"))
             {
                 strSelect = strSelect + "LIMIT " + limitResult + " ";
             }
@@ -360,7 +372,7 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesContinent(String aContinent, int aLimit)
+    public ArrayList<City> getCitiesContinent(String aContinent, String aLimit)
     {
         String searchCondition = "WHERE country.Continent = '" + aContinent + "'";
 
@@ -373,7 +385,7 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesRegion(String aRegion, int aLimit)
+    public ArrayList<City> getCitiesRegion(String aRegion, String aLimit)
     {
         String searchCondition = "WHERE country.Region = '" + aRegion + "'";
 
@@ -386,7 +398,7 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesCountry(String aCountry, int aLimit)
+    public ArrayList<City> getCitiesCountry(String aCountry, String aLimit)
     {
         String searchCondition = "WHERE country.Name = '" + aCountry + "'";
 
@@ -399,7 +411,7 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesDistrict(String aDistrict, int aLimit)
+    public ArrayList<City> getCitiesDistrict(String aDistrict, String aLimit)
     {
         String searchCondition = "WHERE city.District = '" + aDistrict + "'";
 
