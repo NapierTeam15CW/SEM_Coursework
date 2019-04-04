@@ -372,7 +372,8 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesContinent(String aContinent, String aLimit)
+    @RequestMapping("cities_continent")
+    public ArrayList<City> getCitiesContinent(@RequestParam(value="continent") String aContinent, @RequestParam(value="limit",defaultValue = "-1") String aLimit)
     {
         String searchCondition = "WHERE country.Continent = '" + aContinent + "'";
 
