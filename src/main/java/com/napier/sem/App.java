@@ -400,7 +400,8 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesCountry(String aCountry, String aLimit)
+    @RequestMapping("cities_country")
+    public ArrayList<City> getCitiesCountry(@RequestParam(value="country")String aCountry, @RequestParam(value="limit", defaultValue = "-1") String aLimit)
     {
         String searchCondition = "WHERE country.Name = '" + aCountry + "'";
 
@@ -413,7 +414,8 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesDistrict(String aDistrict, String aLimit)
+    @RequestMapping("cities_district")
+    public ArrayList<City> getCitiesDistrict(@RequestParam(value="district") String aDistrict, @RequestParam(value="limit",defaultValue = "-1") String aLimit)
     {
         String searchCondition = "WHERE city.District = '" + aDistrict + "'";
 
