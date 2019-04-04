@@ -1,5 +1,11 @@
 package com.napier.sem;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -8,6 +14,8 @@ import java.util.ArrayList;
  *
  * Class containing functions to produce reports
  */
+@SpringBootApplication
+@RestController
 public class App
 {
     /**
@@ -15,73 +23,28 @@ public class App
      */
     public static void main(String[] args)
     {
-        // Create new Application
-        App a = new App();
-
         // Connect to database
         if (args.length < 1)
         {
-            a.connect("localhost:3306");
+            connect("localhost:33060");
         }
         else
         {
-            a.connect(args[0]);
+            connect(args[0]);
         }
 
-        // Get city
-        City kabul = a.getCity(1);
-        // Display results
-        a.displayCity(kabul);
-
-//        // Get Countries
-//        ArrayList<Country> countries = a.getCountriesInRegion("Eastern Asia",5);
-//
-//        // Display countries
-//        a.displayCountries(countries);
-
-        // Get Cities by Region - Limited to top 5
-        ArrayList<City> cities1 = a.getCitiesRegion("Eastern Asia",5);
-        // Display countries
-        a.displayCities(cities1);
-        System.out.println();
-
-        // Get Cities by District - Limited to top 3
-        ArrayList<City> cities2 = a.getCitiesDistrict("Inner Mongolia",3);
-        // Display countries
-        a.displayCities(cities2);
-        System.out.println();
-
-        // Get Cities by Country - Limited to top 15
-        ArrayList<City> cities3 = a.getCitiesCountry("United Kingdom",15);
-        // Display countries
-        a.displayCities(cities3);
-        System.out.println();
-
-        // Get Cities by Continent - limited to top 10
-        ArrayList<City> cities4 = a.getCitiesContinent("Africa",10);
-        // Display countries
-        a.displayCities(cities4);
-        System.out.println();
-
-        // Get Cities (all) - Limited to top 5
-        ArrayList<City> cities5 = a.getCities("",5);
-        // Display countries
-        a.displayCities(cities5);
-        System.out.println();
-
-        // Disconnect from database
-        a.disconnect();
+        SpringApplication.run(App.class, args);
     }
 
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con = null;
 
     /**
      * Connect to the MySQL database.
      */
-    public void connect(String location)
+    public static void connect(String location)
     {
         try
         {
@@ -122,7 +85,7 @@ public class App
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect()
+    public static void disconnect()
     {
         if (con != null)
         {
@@ -222,7 +185,7 @@ public class App
             // clip the string.
             String name = (country.name.length()>15)?country.name.substring(0,15):country.name;
             String continent = (country.continent.length()>15)?country.continent.substring(0,15):country.continent;
-            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;;
+            String region = (country.region.length()>15)?country.region.substring(0,15):country.region;
             String capital = (country.capital_name.length()>15)?country.capital_name.substring(0,10):country.capital_name;
 
             // Print country
@@ -239,16 +202,18 @@ public class App
      * @return List of countries organised from largest to smallest population
      */
     public ArrayList<Country> getAllCountries() {
-        return getCountries("");
+        return getCountries("",-1);
     }
 
     /**
      * Gets the top most populous countries.
      * The number of countries returned is given by the user
-     * @param limit the number of countries to be returned
+     * @param limitStr the number of countries to be returned
      * @return List of countries organised from largest to smallest population
      */
-    public ArrayList<Country> getCountries(int limit) {
+    @RequestMapping("countries")
+    public ArrayList<Country> getCountries(@RequestParam(value="limit", defaultValue="-1") String limitStr) {
+        int limit = Integer.parseInt(limitStr);
         return getCountries("", limit);
     }
 
@@ -259,7 +224,7 @@ public class App
      * @return List of countries in a continent
      */
     public ArrayList<Country> getAllCountriesInContinent(String continent) {
-        return getCountries("WHERE country.Continent = '"+continent+"'\n");
+        return getCountries("WHERE country.Continent = '"+continent+"'\n",-1);
     }
 
     /**
@@ -281,7 +246,7 @@ public class App
      * @return List of countries in a region
      */
     public ArrayList<Country> getAllCountriesInRegion(String region) {
-        return getCountries("WHERE country.Region = '"+region+"'\n");
+        return getCountries("WHERE country.Region = '"+region+"'\n",-1);
     }
 
     /**
@@ -341,16 +306,6 @@ public class App
             return null;
         }
     }
-    /**
-     * Gets all countries within SQL condition
-     *
-     * @param condition the SQL condition
-     * @return List of countries
-     */
-    public ArrayList<Country> getCountries(String condition) {
-        return getCountries(condition, -1);
-    }
-
 
     /**
      * Method searches through the database and returns a list
