@@ -503,4 +503,136 @@ public class App
             System.out.println(cityString);
         }
     }
+
+
+    /**
+     * Returns details for a given country
+     *
+     */
+
+    public Country getCountryDetails(String aCountry)
+    {
+        try
+        {
+            Country country = new Country();
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name "
+                            + "FROM country "
+                            + "WHERE country.Name = '" + aCountry + "' ";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract Country information
+
+            while (rset.next())
+            {
+                country.code = rset.getString("country.Code");
+                country.name = rset.getString("country.Name");
+
+            }
+            return country;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+
+    /**
+     * Returns a list of languages for a given country
+     */
+
+    public ArrayList<CountryLanguage> getLanguage(Country aCountry)
+    {
+
+        String countryName = aCountry.name;
+        try
+        {
+            Statement s = con.createStatement();
+
+            String strSelect =
+                    "SELECT country.Name, countryLanguage.Language, countryLanguage.percentage"
+                            + "FROM country JOIN countryLanguage ON (country.Code = countryLanguage.CountryCode)"
+                            + "WHERE country.Name = '" + aCountry.name + "' "
+                            + "AND countryLanguage.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')"
+                            + "ORDER BY countryLanguage.Language ";
+
+
+            ResultSet r = s.executeQuery(strSelect);
+
+            ArrayList<CountryLanguage> languages = new ArrayList<>();
+            while(r.next())
+            {
+                CountryLanguage language = new CountryLanguage();
+                language.code = r.getString("language.Code");
+                language.isOfficial = r.getBoolean("language.IsOfficial");
+                language.language = r.getString("language.Name");
+                language.percentage = r.getFloat("language.Percentage");
+                languages.add(language);
+            }
+
+            return languages;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get list of languages");
+            return null;
+        }
+    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesContinent(String continent, int limit)
+//    {
+//        String condition = "WHERE country.Continent = '" + continent + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesRegion(String region, int limit)
+//    {
+//        String condition = "WHERE country.Regon = '" + region + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
+//
+//    public ArrayList<CountryLanguage> getLanguagesCountry(String country, int limit)
+//    {
+//        String condition = "WHERE country.Name = '" + country + "'";
+//
+//        return getLanguage(condition, limit);
+//    }
+
+    public void displayLanguages(ArrayList<CountryLanguage> languages)
+    {
+        if (languages == null)
+        {
+            System.out.println("No Languages found");
+            return;
+        }
+
+        for(CountryLanguage l : languages)
+        {
+            if(l == null)
+            {
+                continue;
+            }
+
+            String id = l.code;
+            String language = l.language;
+            boolean isOfficial = l.isOfficial;
+            float percentage = l.percentage;
+
+            String languageString = id + " " +
+                    language +  " " +
+                    isOfficial +  " " +
+                    percentage + "% ";
+
+            System.out.println(languageString);
+        }
+    }
 }
