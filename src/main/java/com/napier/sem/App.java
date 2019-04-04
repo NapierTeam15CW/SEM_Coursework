@@ -257,10 +257,12 @@ public class App
      * countries returned is given by "limit".
      * The number of countries returned is limited by "limit"
      * @param region the region the countries are in
-     * @param limit the number of results to return
+     * @param limitStr the number of results to return
      * @return List of top most populous countries in a region
      */
-    public ArrayList<Country> getCountriesInRegion(String region, int limit) {
+    @RequestMapping("countries_region")
+    public ArrayList<Country> getCountriesInRegion(@RequestParam(value="region") String region, @RequestParam(value="limit",defaultValue = "-1") String limitStr) {
+        int limit = Integer.parseInt(limitStr);
         return getCountries("WHERE country.Region = '"+region+"'\n", limit);
     }
 
