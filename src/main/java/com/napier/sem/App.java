@@ -202,18 +202,17 @@ public class App
      * @return List of countries organised from largest to smallest population
      */
     public ArrayList<Country> getAllCountries() {
-        return getCountries("",-1);
+        return getCountries("","-1");
     }
 
     /**
      * Gets the top most populous countries.
      * The number of countries returned is given by the user
-     * @param limitStr the number of countries to be returned
+     * @param limit the number of countries to be returned
      * @return List of countries organised from largest to smallest population
      */
     @RequestMapping("countries")
-    public ArrayList<Country> getCountries(@RequestParam(value="limit", defaultValue="-1") String limitStr) {
-        int limit = Integer.parseInt(limitStr);
+    public ArrayList<Country> getCountries(@RequestParam(value="limit", defaultValue="-1") String limit) {
         return getCountries("", limit);
     }
 
@@ -224,7 +223,7 @@ public class App
      * @return List of countries in a continent
      */
     public ArrayList<Country> getAllCountriesInContinent(String continent) {
-        return getCountries("WHERE country.Continent = '"+continent+"'\n",-1);
+        return getCountries("WHERE country.Continent = '"+continent+"'\n","-1");
     }
 
     /**
@@ -232,12 +231,11 @@ public class App
      * from largest population to smallest
      * The number of countries returned is specified by the user.
      * @param continent the continent the countries belong to
-     * @param limitStr the number of countries to be returned
+     * @param limit the number of countries to be returned
      * @return List of top most populous countries in a continent
      */
     @RequestMapping("countries_continent")
-    public ArrayList<Country> getCountriesInContinent(@RequestParam(value="continent") String continent, @RequestParam(value = "limit", defaultValue="-1") String limitStr) {
-        int limit = Integer.parseInt(limitStr);
+    public ArrayList<Country> getCountriesInContinent(@RequestParam(value="continent") String continent, @RequestParam(value = "limit", defaultValue="-1") String limit) {
         return getCountries("WHERE country.Continent = '"+continent+"'\n", limit);
     }
 
@@ -248,7 +246,7 @@ public class App
      * @return List of countries in a region
      */
     public ArrayList<Country> getAllCountriesInRegion(String region) {
-        return getCountries("WHERE country.Region = '"+region+"'\n",-1);
+        return getCountries("WHERE country.Region = '"+region+"'\n","-1");
     }
 
     /**
@@ -257,12 +255,11 @@ public class App
      * countries returned is given by "limit".
      * The number of countries returned is limited by "limit"
      * @param region the region the countries are in
-     * @param limitStr the number of results to return
+     * @param limit the number of results to return
      * @return List of top most populous countries in a region
      */
     @RequestMapping("countries_region")
-    public ArrayList<Country> getCountriesInRegion(@RequestParam(value="region") String region, @RequestParam(value="limit",defaultValue = "-1") String limitStr) {
-        int limit = Integer.parseInt(limitStr);
+    public ArrayList<Country> getCountriesInRegion(@RequestParam(value="region") String region, @RequestParam(value="limit",defaultValue = "-1") String limit) {
         return getCountries("WHERE country.Region = '"+region+"'\n", limit);
     }
 
@@ -273,12 +270,12 @@ public class App
      * @param limit the number of results to return. If less than zero, returns all results
      * @return List of countries
      */
-    public ArrayList<Country> getCountries(String condition, int limit) {
+    public ArrayList<Country> getCountries(String condition, String limit) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String limitCondition = (limit>0)?"LIMIT "+limit+"\n":""; // Limit results if limit is positive and nonzero
+            String limitCondition = (!limit.equals("-1"))?"LIMIT "+limit+"\n":""; // Limit results if limit isn't "-1"
             String strSelect =
                     "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name, city.ID\n"+
                             "FROM country\n"+
