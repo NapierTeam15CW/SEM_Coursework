@@ -232,10 +232,12 @@ public class App
      * from largest population to smallest
      * The number of countries returned is specified by the user.
      * @param continent the continent the countries belong to
-     * @param limit the number of countries to be returned
+     * @param limitStr the number of countries to be returned
      * @return List of top most populous countries in a continent
      */
-    public ArrayList<Country> getCountriesInContinent(String continent, int limit) {
+    @RequestMapping("countries_continent")
+    public ArrayList<Country> getCountriesInContinent(@RequestParam(value="continent") String continent, @RequestParam(value = "limit", defaultValue="-1") String limitStr) {
+        int limit = Integer.parseInt(limitStr);
         return getCountries("WHERE country.Continent = '"+continent+"'\n", limit);
     }
 
@@ -276,7 +278,7 @@ public class App
             // Create string for SQL statement
             String limitCondition = (limit>0)?"LIMIT "+limit+"\n":""; // Limit results if limit is positive and nonzero
             String strSelect =
-                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name\n"+
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name, city.ID\n"+
                             "FROM country\n"+
                             "JOIN city ON country.Capital = city.ID\n"+
                             condition+
@@ -295,6 +297,7 @@ public class App
                 country.region = rset.getString("country.Region");
                 country.population = rset.getInt("country.Population");
                 country.capital_name = rset.getString("city.Name");
+                country.capital_code = rset.getInt("city.ID");
                 countries.add(country);
             }
             return countries;
