@@ -386,7 +386,8 @@ public class App
      *
      * Results obtained can also be limited
      */
-    public ArrayList<City> getCitiesRegion(String aRegion, String aLimit)
+    @RequestMapping("cities_region")
+    public ArrayList<City> getCitiesRegion(@RequestParam(value="region") String aRegion, @RequestParam(value="limit", defaultValue = "-1") String aLimit)
     {
         String searchCondition = "WHERE country.Region = '" + aRegion + "'";
 
