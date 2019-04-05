@@ -31,7 +31,7 @@
     var urlParams = new URLSearchParams(window.location.search);
     var limit = urlParams.get('limit');
 
-    var URL = "http://" + window.location.hostname + "/app/countries" + limit;
+    var URL = "http://" + window.location.hostname + "/app/countries?limit=" + limit;
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.
