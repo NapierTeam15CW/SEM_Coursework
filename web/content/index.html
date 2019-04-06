@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>Group 15: SEM Coursework</title>
+    <title>Title</title>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
@@ -28,17 +28,24 @@
 </head>
 <body>
 <div class="mypanel"></div>
-<a href="https://github.com/NapierTeam15CW/SEM_Coursework">GitHub repo</a>
 </body>
 
 <script>
-    $.getJSON('http://time.jsontest.com', function(data) {
-
-        var text = `Date: ${data.date}<br>
-                    Time: ${data.time}<br>
-                    Unix time: ${data.milliseconds_since_epoch}`
+    var header1 = 'App Data Base Tests';
+    var URL1 = "http://" + window.location.hostname + "/app/countries";
+    var URL2 = "http://" + window.location.hostname + "/app/countries?limit=1";
 
 
+
+
+
+
+
+
+    $.getJSON(URL, function(data) {
+        var text = `${data.emp_no}<br>
+                   ${data.first_name}<br>
+                   ${data.last_name}<br>`
         $(".mypanel").html(text);
     });
 </script>
