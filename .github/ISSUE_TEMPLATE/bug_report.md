@@ -2,7 +2,7 @@
 name: Bug report
 about: Submit a bug report to help us improve the software
 title: "[BUG]"
-labels: ''
+labels: 'Bug :warning:'
 assignees: ''
 
 ---
