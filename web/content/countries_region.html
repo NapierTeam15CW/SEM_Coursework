@@ -33,7 +33,7 @@
     var region = urlParams.get('region');
     var limit = urlParams.get('limit');
 
-    var URL = "http://" + window.location.hostname + "/app/countries?region=" + region + "&limit=" + limit;
+    var URL = "http://" + window.location.hostname + "/app/countries_region?region=" + region + "&limit=" + limit;
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.
