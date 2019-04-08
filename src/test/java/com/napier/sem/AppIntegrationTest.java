@@ -12,11 +12,13 @@ public class AppIntegrationTest
 {
     static App app;
 
+    static String location = "localhost:33060";
+
     @BeforeAll
     static void init()
     {
         app = new App();
-        app.connect("localhost:33060");
+        app.connect(location);
     }
 
     @Test
@@ -29,5 +31,41 @@ public class AppIntegrationTest
         assertEquals(aCity.CountryCode, "AFG");
         assertEquals(aCity.District, "Kabol");
         assertEquals(aCity.Population, 1780000);
+    }
+
+    @Test
+    void testGetCountries()
+    {
+        int outputSize = app.getCountries("5").size();
+        assertEquals(5, outputSize);
+    }
+
+    @Test
+    void testGetCountriesNull()
+    {
+        int outputSize = app.getCountriesInContinent("I am groot","-1").size();
+        assertEquals(0,outputSize);
+    }
+
+    @Test
+    void testGetCountriesError()
+    {
+        app.disconnect();
+        assertNull(app.getCountries("5"));
+        app.connect(location);
+    }
+
+    @Test
+    void testGetCountriesContinent()
+    {
+        int outputSize = app.getCountriesInContinent("Asia","5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCountriesRegion()
+    {
+        int outputSize = app.getCountriesInRegion("Caribbean","5").size();
+        assertEquals(5,outputSize);
     }
 }

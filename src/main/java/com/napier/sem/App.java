@@ -320,7 +320,6 @@ public class App
     {
         return getCities("",limitResult);
     }
-
     /**
      * Method searches through the database and returns a list
      * of all cities that are in the world
