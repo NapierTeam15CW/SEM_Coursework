@@ -334,11 +334,11 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, country.Name, city.District, city.Population "
-                            + "FROM country "
-                            + "JOIN city ON country.Code = city.CountryCode "
+                    "SELECT city.ID, city.Name, country.Name, country.Code, city.District, city.Population\n"
+                            + "FROM country\n"
+                            + "JOIN city ON country.Code = city.CountryCode\n"
                             + searchCondition
-                            + "ORDER BY city.population DESC ";
+                            + "ORDER BY city.population DESC\n";
             if(!limitResult.equals("-1"))
             {
                 strSelect = strSelect + "LIMIT " + limitResult + " ";
@@ -350,7 +350,9 @@ public class App
             while (rset.next())
             {
                 City city = new City();
+                city.ID = rset.getInt("city.ID");
                 city.Name = rset.getString("city.Name");
+                city.CountryCode = rset.getString("country.Code");
                 city.CountryName = rset.getString("country.Name");
                 city.District = rset.getString("city.District");
                 city.Population = rset.getInt("city.Population");
@@ -389,7 +391,7 @@ public class App
     @RequestMapping("cities_region")
     public ArrayList<City> getCitiesRegion(@RequestParam(value="region") String aRegion, @RequestParam(value="limit", defaultValue = "-1") String aLimit)
     {
-        String searchCondition = "WHERE country.Region = '" + aRegion + "'";
+        String searchCondition = "WHERE country.Region = '" + aRegion + "'\n";
 
         return getCities(searchCondition, aLimit);
     }
@@ -403,7 +405,7 @@ public class App
     @RequestMapping("cities_country")
     public ArrayList<City> getCitiesCountry(@RequestParam(value="country")String aCountry, @RequestParam(value="limit", defaultValue = "-1") String aLimit)
     {
-        String searchCondition = "WHERE country.Name = '" + aCountry + "'";
+        String searchCondition = "WHERE country.Name = '" + aCountry + "'\n";
 
         return getCities(searchCondition, aLimit);
     }
@@ -417,7 +419,7 @@ public class App
     @RequestMapping("cities_district")
     public ArrayList<City> getCitiesDistrict(@RequestParam(value="district") String aDistrict, @RequestParam(value="limit",defaultValue = "-1") String aLimit)
     {
-        String searchCondition = "WHERE city.District = '" + aDistrict + "'";
+        String searchCondition = "WHERE city.District = '" + aDistrict + "'\n";
 
         return getCities(searchCondition, aLimit);
     }
