@@ -68,4 +68,54 @@ public class AppIntegrationTest
         int outputSize = app.getCountriesInRegion("Caribbean","5").size();
         assertEquals(5,outputSize);
     }
+
+    @Test
+    void testGetCities()
+    {
+        int outputSize = app.getCities("5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCitiesNull()
+    {
+        int outputSize = app.getCitiesContinent("Smeg","5").size();
+        assertEquals(0,outputSize);
+    }
+
+    @Test
+    void testGetCitiesError()
+    {
+        app.disconnect();
+        assertNull(app.getCities("5"));
+        app.connect(location);
+    }
+
+    @Test
+    void testGetCitiesContinent()
+    {
+        int outputSize = app.getCitiesContinent("Asia", "5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCitiesRegion()
+    {
+        int outputSize = app.getCitiesRegion("Caribbean", "5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCitiesDistrict()
+    {
+        int outputSize = app.getCitiesDistrict("Buenos Aires","5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCitiesCountry()
+    {
+        int outputSize = app.getCitiesCountry("Cuba","5").size();
+        assertEquals(5,outputSize);
+    }
 }
