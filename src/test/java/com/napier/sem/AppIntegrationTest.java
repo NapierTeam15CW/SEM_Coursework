@@ -79,7 +79,7 @@ public class AppIntegrationTest
     @Test
     void testGetCitiesNull()
     {
-        int outputSize = app.getCitiesContinent("Smeg","5").size();
+        int outputSize = app.getCitiesContinent("I am groot","5").size();
         assertEquals(0,outputSize);
     }
 
@@ -116,6 +116,13 @@ public class AppIntegrationTest
     void testGetCitiesCountry()
     {
         int outputSize = app.getCitiesCountry("Cuba","5").size();
+        assertEquals(5,outputSize);
+    }
+
+    @Test
+    void testGetCapitals()
+    {
+        int outputSize = app.getCapitals("5").size();
         assertEquals(5,outputSize);
     }
 }

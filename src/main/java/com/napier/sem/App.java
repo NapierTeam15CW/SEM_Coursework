@@ -320,6 +320,21 @@ public class App
     {
         return getCities("",limitResult);
     }
+
+    private String capitalCondition = "city.ID = country.Capital";
+
+    /**
+     * Returns a list of capital cities ordered by population.
+     * List can be limited
+     * @param limitResult the size of the list returned
+     * @return a list of capital cities
+     */
+    @RequestMapping("capitals")
+    public ArrayList<City> getCapitals(@RequestParam(value="limit", defaultValue="-1") String limitResult)
+    {
+        return getCities("WHERE "+capitalCondition+"\n",limitResult);
+    }
+
     /**
      * Method searches through the database and returns a list
      * of all cities that are in the world
