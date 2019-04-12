@@ -125,4 +125,11 @@ public class AppIntegrationTest
         int outputSize = app.getCapitals("5").size();
         assertEquals(5,outputSize);
     }
+
+    @Test
+    void testGetCapitalsContinent()
+    {
+        int outputSize = app.getCapitalsContinent("Asia","5").size();
+        assertEquals(5,outputSize);
+    }
 }

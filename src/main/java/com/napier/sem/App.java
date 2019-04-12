@@ -336,6 +336,19 @@ public class App
     }
 
     /**
+     * Returns a list of capital cities filtered by continent
+     * ordered by population
+     * @param continent the continent the capital cities are from
+     * @param limitResult the number of capital cities returned
+     * @return a list of capital cities from the same continent
+     */
+    @RequestMapping("capitals_continent")
+    public ArrayList<City> getCapitalsContinent(@RequestParam(value="continent") String continent, @RequestParam(value="limit", defaultValue = "-1") String limitResult)
+    {
+        return getCities("WHERE "+capitalCondition+"\n"+" AND country.continent = '"+continent+"'\n",limitResult);
+    }
+
+    /**
      * Method searches through the database and returns a list
      * of all cities that are in the world
      *
