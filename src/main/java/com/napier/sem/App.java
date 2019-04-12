@@ -337,7 +337,7 @@ public class App
 
     /**
      * Returns a list of capital cities filtered by continent
-     * ordered by population
+     * ordered by population (largest to smallest)
      * @param continent the continent the capital cities are from
      * @param limitResult the number of capital cities returned
      * @return a list of capital cities from the same continent
@@ -346,6 +346,19 @@ public class App
     public ArrayList<City> getCapitalsContinent(@RequestParam(value="continent") String continent, @RequestParam(value="limit", defaultValue = "-1") String limitResult)
     {
         return getCities("WHERE "+capitalCondition+"\n"+" AND country.continent = '"+continent+"'\n",limitResult);
+    }
+
+    /**
+     * Returns a list of capital cities filtered by region
+     * orderd by population (largest to smallest)
+     * @param region the region the capital cities are from
+     * @param limitResult the number of capital cities returned
+     * @return a list of capital cities in the same region
+     */
+    @RequestMapping("capitals_region")
+    public ArrayList<City> getCapitalsRegion(@RequestParam(value="region") String region, @RequestParam(value="limit",defaultValue="-1") String limitResult)
+    {
+        return getCities("WHERE "+capitalCondition+"\n"+"AND country.region = '"+region+"'\n",limitResult);
     }
 
     /**

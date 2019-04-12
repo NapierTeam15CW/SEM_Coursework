@@ -132,4 +132,12 @@ public class AppIntegrationTest
         int outputSize = app.getCapitalsContinent("Asia","5").size();
         assertEquals(5,outputSize);
     }
+
+    @Test
+    void testGetCapitalsRegion()
+    {
+        ArrayList<City> capitals = app.getCapitalsRegion("Caribbean", "5");
+        int outputSize = capitals.size();
+        assertEquals(5,outputSize);
+    }
 }
