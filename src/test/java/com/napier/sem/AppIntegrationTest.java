@@ -140,4 +140,11 @@ public class AppIntegrationTest
         int outputSize = capitals.size();
         assertEquals(5,outputSize);
     }
+
+    @Test
+    void testGetCountriesPopulationReport()
+    {
+        int outputSize = app.getCountriesPopulationReport().size();
+        assertTrue(outputSize>20);
+    }
 }

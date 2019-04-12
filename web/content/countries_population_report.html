@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Capital Cities - Continent</title>
+    <title>Countries Population Report</title>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
@@ -25,15 +25,13 @@
     </style>
 </head>
 <body>
-<h1>Capital City Report - User Selected Continent</h1>
+<h1>Countries Population Report</h1>
 <div class="showData">Waiting</div>
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var continent = urlParams.get('continent');
-    var limit = urlParams.get('limit');
 
-    var URL = "http://" + window.location.hostname + "/app/capitals_continent?continent=" + continent + "&limit=" + limit;
+    var URL = "http://" + window.location.hostname + "/app/countries_population_report";
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

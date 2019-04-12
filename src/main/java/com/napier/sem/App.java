@@ -361,6 +361,44 @@ public class App
         return getCities("WHERE "+capitalCondition+"\n"+"AND country.region = '"+region+"'\n",limitResult);
     }
 
+    @RequestMapping("countries_population_report")
+    public ArrayList<PopulationReport> getCountriesPopulationReport()
+    {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name, Population, cityPop.PopInCities AS PopInCities\n"+
+                            "FROM country\n"+
+                            "LEFT JOIN (SELECT CountryCode, SUM(Population) AS PopInCities FROM city GROUP BY CountryCode) cityPop ON country.Code = cityPop.CountryCode\n"+
+                    "ORDER BY Name";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<PopulationReport> reports = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationReport pr = new PopulationReport();
+                pr.Name = rset.getString("Name");
+                pr.Population = rset.getInt("Population");
+                pr.InCities = rset.getInt("PopInCities");
+                pr.NotInCities = pr.Population - pr.InCities;
+                pr.InCitiesPercentage = ((double) pr.InCities / (double) pr.Population)*100;
+                pr.InCitiesPercentage = ((double) Math.round(pr.InCitiesPercentage*100))/100;
+                pr.NotInCitiesPercentage = ((double) pr.NotInCities /(double) pr.Population)*100;
+                pr.NotInCitiesPercentage = ((double) Math.round(pr.NotInCitiesPercentage*100))/100;
+                reports.add(pr);
+            }
+            return reports;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
     /**
      * Method searches through the database and returns a list
      * of all cities that are in the world
