@@ -147,4 +147,11 @@ public class AppIntegrationTest
         int outputSize = app.getCountriesPopulationReport().size();
         assertTrue(outputSize>20);
     }
+
+    @Test
+    void testGetContinentsPopulationReport()
+    {
+        int outputSize = app.getContinentsPopulationReport().size();
+        assertTrue(outputSize>5);
+    }
 }

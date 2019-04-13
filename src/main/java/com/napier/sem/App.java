@@ -361,6 +361,45 @@ public class App
         return getCities("WHERE "+capitalCondition+"\n"+"AND country.region = '"+region+"'\n",limitResult);
     }
 
+    @RequestMapping("continents_population_report")
+    public ArrayList<PopulationReport> getContinentsPopulationReport()
+    {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Continent, SUM(Population) AS Population, SUM(cityPop.PopInCities) AS InCities\n"+
+                            "FROM country\n"+
+                            "LEFT JOIN (SELECT CountryCode, SUM(Population) AS PopInCities FROM city GROUP BY CountryCode) cityPop ON country.Code = cityPop.CountryCode\n"+
+                            "GROUP BY Continent\n"+
+                            "ORDER BY Continent";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<PopulationReport> reports = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationReport pr = new PopulationReport();
+                pr.Name = rset.getString("Continent");
+                pr.Population = rset.getLong("Population");
+                pr.InCities = rset.getLong("InCities");
+                pr.NotInCities = pr.Population - pr.InCities;
+                pr.InCitiesPercentage = ((double) pr.InCities / (double) pr.Population)*100;
+                pr.InCitiesPercentage = ((double) Math.round(pr.InCitiesPercentage*100))/100;
+                pr.NotInCitiesPercentage = ((double) pr.NotInCities /(double) pr.Population)*100;
+                pr.NotInCitiesPercentage = ((double) Math.round(pr.NotInCitiesPercentage*100))/100;
+                reports.add(pr);
+            }
+            return reports;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get continent details");
+            return null;
+        }
+    }
+
     @RequestMapping("countries_population_report")
     public ArrayList<PopulationReport> getCountriesPopulationReport()
     {
