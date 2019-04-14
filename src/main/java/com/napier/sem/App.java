@@ -361,6 +361,59 @@ public class App
         return getCities("WHERE "+capitalCondition+"\n"+"AND country.region = '"+region+"'\n",limitResult);
     }
 
+    /**
+     * Generates a population report for regions
+     * that includes the population of a region
+     *  - in total, in cities and out of cities
+     * @return a population report of regions
+     */
+    @RequestMapping("regions_population_report")
+    public ArrayList<PopulationReport> getRegionsPopulationReport()
+    {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Region, SUM(Population) AS Population, SUM(cityPop.PopInCities) AS InCities\n"+
+                            "FROM country\n"+
+                            "LEFT JOIN (SELECT CountryCode, SUM(Population) AS PopInCities FROM city GROUP BY CountryCode) cityPop ON country.Code = cityPop.CountryCode\n"+
+                            "GROUP BY Region\n"+
+                            "ORDER BY Region";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<PopulationReport> reports = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationReport pr = new PopulationReport();
+                pr.Name = rset.getString("Region");
+                pr.Population = rset.getLong("Population");
+                pr.InCities = rset.getLong("InCities");
+                pr.NotInCities = pr.Population - pr.InCities;
+                if(pr.NotInCities < 0)
+                    pr.NotInCities = 0;
+                pr.InCitiesPercentage = ((double) pr.InCities / (double) pr.Population)*100;
+                pr.InCitiesPercentage = ((double) Math.round(pr.InCitiesPercentage*100))/100;
+                pr.NotInCitiesPercentage = ((double) pr.NotInCities /(double) pr.Population)*100;
+                pr.NotInCitiesPercentage = ((double) Math.round(pr.NotInCitiesPercentage*100))/100;
+                reports.add(pr);
+            }
+            return reports;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get region details");
+            return null;
+        }
+    }
+
+    /**
+     * Generates a population report for continents
+     * that includes population of the continent
+     *  - in total, in cities and out of cities
+     * @return a population report of continents
+     */
     @RequestMapping("continents_population_report")
     public ArrayList<PopulationReport> getContinentsPopulationReport()
     {
@@ -384,6 +437,8 @@ public class App
                 pr.Population = rset.getLong("Population");
                 pr.InCities = rset.getLong("InCities");
                 pr.NotInCities = pr.Population - pr.InCities;
+                if(pr.NotInCities < 0)
+                    pr.NotInCities = 0;
                 pr.InCitiesPercentage = ((double) pr.InCities / (double) pr.Population)*100;
                 pr.InCitiesPercentage = ((double) Math.round(pr.InCitiesPercentage*100))/100;
                 pr.NotInCitiesPercentage = ((double) pr.NotInCities /(double) pr.Population)*100;
@@ -400,6 +455,12 @@ public class App
         }
     }
 
+    /**
+     * Generates a population report of countries
+     * that includes the population of the country
+     *  - in total, in cities and out of cities
+     * @return a population report of countries
+     */
     @RequestMapping("countries_population_report")
     public ArrayList<PopulationReport> getCountriesPopulationReport()
     {
@@ -419,9 +480,11 @@ public class App
             {
                 PopulationReport pr = new PopulationReport();
                 pr.Name = rset.getString("Name");
-                pr.Population = rset.getInt("Population");
-                pr.InCities = rset.getInt("PopInCities");
+                pr.Population = rset.getLong("Population");
+                pr.InCities = rset.getLong("PopInCities");
                 pr.NotInCities = pr.Population - pr.InCities;
+                if(pr.NotInCities < 0)
+                    pr.NotInCities = 0;
                 pr.InCitiesPercentage = ((double) pr.InCities / (double) pr.Population)*100;
                 pr.InCitiesPercentage = ((double) Math.round(pr.InCitiesPercentage*100))/100;
                 pr.NotInCitiesPercentage = ((double) pr.NotInCities /(double) pr.Population)*100;
