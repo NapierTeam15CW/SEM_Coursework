@@ -809,6 +809,45 @@ public class App
         }
     }
 
+    /**
+     * Region Population
+     *
+     * Returns the population of a region
+     * where the region is input by
+     * the user
+     */
+    @RequestMapping("region_population")
+    public ArrayList<PopulationInfo> getRegionPopulation(@RequestParam(value="region")String aRegion)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Region, SUM(country.Population) AS Population "
+                            + "FROM country "
+                            + "WHERE country.Region = '" + aRegion + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            ArrayList<PopulationInfo> regionPop = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationInfo popInfo = new PopulationInfo();
+                popInfo.name = rset.getString("country.Region");
+                popInfo.population = rset.getLong("Population");
+                regionPop.add(popInfo);
+            }
+            return regionPop;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details");
+            return null;
+        }
+    }
 
 
 }

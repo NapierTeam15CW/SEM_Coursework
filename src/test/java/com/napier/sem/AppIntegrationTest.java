@@ -177,4 +177,12 @@ public class AppIntegrationTest
         assertEquals(continent.get(0).name,"Africa");
         assertEquals(continent.get(0).population, 784475000L);
     }
+
+    @Test
+    void testRegionPopulation()
+    {
+        ArrayList<PopulationInfo> region = app.getRegionPopulation("North America");
+        assertEquals(region.get(0).name,"North America");
+        assertEquals(region.get(0).population, 309632000L);
+    }
 }
