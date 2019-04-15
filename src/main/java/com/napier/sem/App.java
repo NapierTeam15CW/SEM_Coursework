@@ -929,5 +929,23 @@ public class App
         }
     }
 
+    /**
+     * City Population
+     *
+     * Returns the population of a district
+     * where the district is input by
+     * the user
+     *
+     * Can return the populations of many cities
+     * with the same name
+     *
+     * Reuses getCities method
+     */
+    @RequestMapping("city_population")
+    public ArrayList<City> getCityPopulation(@RequestParam(value="city")String aCity)
+    {
+        String searchCondition = "WHERE city.Name = '" + aCity + "'";
+        return getCities(searchCondition, "-1");
+    }
 
 }

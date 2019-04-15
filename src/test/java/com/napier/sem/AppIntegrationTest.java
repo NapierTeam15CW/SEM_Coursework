@@ -176,4 +176,12 @@ public class AppIntegrationTest {
         assertEquals(district.get(0).name,"Scotland");
         assertEquals(district.get(0).population, 1429620L);
     }
+
+    @Test
+    void testCityPopulation()
+    {
+        ArrayList<City> cities = app.getCityPopulation("Springfield");
+        int outputSize = cities.size();
+        assertEquals(3,outputSize);
+    }
 }
