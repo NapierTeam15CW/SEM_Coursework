@@ -185,4 +185,12 @@ public class AppIntegrationTest
         assertEquals(region.get(0).name,"North America");
         assertEquals(region.get(0).population, 309632000L);
     }
+
+    @Test
+    void testCountryPopulation()
+    {
+        ArrayList<PopulationInfo> country = app.getCountryPopulation("United Kingdom");
+        assertEquals(country.get(0).name,"United Kingdom");
+        assertEquals(country.get(0).population, 59623400L);
+    }
 }

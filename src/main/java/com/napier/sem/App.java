@@ -849,5 +849,45 @@ public class App
         }
     }
 
+    /**
+     * Country Population
+     *
+     * Returns the population of a country
+     * where the country is input by
+     * the user
+     */
+    @RequestMapping("country_population")
+    public ArrayList<PopulationInfo> getCountryPopulation(@RequestParam(value="country")String aCountry)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Name, SUM(country.Population) AS Population "
+                            + "FROM country "
+                            + "WHERE country.Name = '" + aCountry + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            ArrayList<PopulationInfo> countryPop = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationInfo popInfo = new PopulationInfo();
+                popInfo.name = rset.getString("country.Name");
+                popInfo.population = rset.getLong("Population");
+                countryPop.add(popInfo);
+            }
+            return countryPop;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details");
+            return null;
+        }
+    }
+
 
 }
