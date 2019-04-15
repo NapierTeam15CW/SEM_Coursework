@@ -13,22 +13,17 @@ package com.napier.sem;
 public class CountryLanguage
 {
     /**
-     * Country code
-     */
-    public String code;
-
-    /**
      * Language spoken in the country
      */
     public String language;
 
     /**
-     * Determines if the language is official for the country
+     * Number of people that speak the language
      */
-    public boolean isOfficial;
+    public long numberOfPeople;
 
     /**
-     * Percentage of people that speak the language
+     * Percentage of world population that speak the language
      */
-    public float percentage;
+    public double percentageOfWorld;
 }
