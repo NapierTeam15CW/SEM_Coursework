@@ -8,7 +8,7 @@
 - Code Coverage Develop [![codecov](https://codecov.io/gh/NapierTeam15CW/SEM_Coursework/branch/develop/graph/badge.svg)](https://codecov.io/gh/NapierTeam15CW/SEM_Coursework)
 
 ## Requirements Met
-### 26 requirements of 32 have been implemented, which is 81.25%.
+### 27 requirements of 32 have been implemented, which is 84.375%.
 | ID    | Name | Met  | Screenshot |
 |-------|------|------|------------|
 | 1 | All the countries in the world organised by largest population to smallest. | Yes |  |
@@ -37,7 +37,7 @@
 | 24 | The population of people, people living in cities, and people not living in cities in each region. | Yes |  |
 | 25 | The population of people, people living in cities, and people not living in cities in each country. | Yes |  |
 | 26 | The population of the world. | Yes |  |
-| 27 | The population of a continent. | No |  |
+| 27 | The population of a continent. | Yes |  |
 | 28 | The population of a region. | No |  |
 | 29 | The population of a country. | No |  |
 | 30 | The population of a district. | No |  |

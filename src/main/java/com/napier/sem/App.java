@@ -769,4 +769,46 @@ public class App
         }
     }
 
+    /**
+     * Continent Population
+     *
+     * Returns the population of a continent
+     * where the continent is input by
+     * the user
+     */
+    @RequestMapping("continent_population")
+    public ArrayList<PopulationInfo> getContinentPopulation(@RequestParam(value="continent")String aContinent)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Continent, SUM(country.Population) AS Population "
+                            + "FROM country "
+                            + "WHERE country.Continent = '" + aContinent + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            ArrayList<PopulationInfo> continentPop = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationInfo popInfo = new PopulationInfo();
+                popInfo.name = rset.getString("country.Continent");
+                popInfo.population = rset.getLong("Population");
+                continentPop.add(popInfo);
+            }
+            return continentPop;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details");
+            return null;
+        }
+    }
+
+
+
 }
