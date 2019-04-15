@@ -739,7 +739,7 @@ public class App
      * Returns the population of the world
      */
     @RequestMapping("world_population")
-    public PopulationInfo getWorldPopulation()
+    public ArrayList<PopulationInfo> getWorldPopulation()
     {
         try
         {
@@ -751,13 +751,15 @@ public class App
                             + "FROM country ";
             // Execute SQL statement
             ResultSet rset = stmnt.executeQuery(strSelect);
-            PopulationInfo popInfo = new PopulationInfo();
+            ArrayList<PopulationInfo> worldPop = new ArrayList<>();
             while (rset.next())
             {
+                PopulationInfo popInfo = new PopulationInfo();
                 popInfo.name = "World";
                 popInfo.population = rset.getLong("Population");
+                worldPop.add(popInfo);
             }
-            return popInfo;
+            return worldPop;
         }
         catch (Exception e)
         {

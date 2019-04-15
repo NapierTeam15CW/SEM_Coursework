@@ -165,9 +165,9 @@ public class AppIntegrationTest
     @Test
     void testWorldPopulation()
     {
-        PopulationInfo world = app.getWorldPopulation();
-        assertEquals(world.name,"World");
-        assertEquals(world.population, 6078749450L);
+        ArrayList<PopulationInfo> world = app.getWorldPopulation();
+        assertEquals(world.get(0).name,"World");
+        assertEquals(world.get(0).population, 6078749450L);
     }
 
 }
