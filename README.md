@@ -33,13 +33,13 @@
 | 20 | The top N populated capital cities in the world where N is provided by the user. | Yes | [20](/Screenshots/20.PNG) |
 | 21 | The top N populated capital cities in a continent where N is provided by the user. | Yes | [21](/Screenshots/21.PNG) |
 | 22 | The top N populated capital cities in a region where N is provided by the user. | Yes | [22](/Screenshots/22.PNG) |
-| 23 | The population of people, people living in cities, and people not living in cities in each continent. | Yes |  |
-| 24 | The population of people, people living in cities, and people not living in cities in each region. | Yes |  |
-| 25 | The population of people, people living in cities, and people not living in cities in each country. | Yes |  |
-| 26 | The population of the world. | Yes |  |
-| 27 | The population of a continent. | Yes |  |
-| 28 | The population of a region. | Yes |  |
-| 29 | The population of a country. | Yes |  |
-| 30 | The population of a district. | Yes |  |
-| 31 | The population of a city. | Yes |  |
-| 32 | Language report | Yes |  |
+| 23 | The population of people, people living in cities, and people not living in cities in each continent. | Yes | [23](/Screenshots/23.PNG) |
+| 24 | The population of people, people living in cities, and people not living in cities in each region. | Yes | [24](/Screenshots/24.PNG) |
+| 25 | The population of people, people living in cities, and people not living in cities in each country. | Yes | [25](/Screenshots/25.PNG) |
+| 26 | The population of the world. | Yes | [26](/Screenshots/26.PNG) |
+| 27 | The population of a continent. | Yes | [27](/Screenshots/27.PNG) |
+| 28 | The population of a region. | Yes | [28](/Screenshots/28.PNG) |
+| 29 | The population of a country. | Yes | [29](/Screenshots/29.PNG) |
+| 30 | The population of a district. | Yes | [30](/Screenshots/30.PNG) |
+| 31 | The population of a city. | Yes | [31](/Screenshots/31.PNG) |
+| 32 | Language report | Yes | [32](/Screenshots/32.PNG) |
