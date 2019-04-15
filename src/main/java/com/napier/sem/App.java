@@ -889,5 +889,45 @@ public class App
         }
     }
 
+    /**
+     * District Population
+     *
+     * Returns the population of a district
+     * where the district is input by
+     * the user
+     */
+    @RequestMapping("district_population")
+    public ArrayList<PopulationInfo> getDistrictPopulation(@RequestParam(value="district")String aDistrict)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.District, SUM(city.Population) AS Population "
+                            + "FROM city "
+                            + "WHERE city.District = '" + aDistrict + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            ArrayList<PopulationInfo> districtPop = new ArrayList<>();
+            while (rset.next())
+            {
+                PopulationInfo popInfo = new PopulationInfo();
+                popInfo.name = rset.getString("city.District");
+                popInfo.population = rset.getLong("Population");
+                districtPop.add(popInfo);
+            }
+            return districtPop;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details");
+            return null;
+        }
+    }
+
 
 }
