@@ -662,7 +662,6 @@ public class App
 
     /**
      * Returns details for a given country
-     *
      */
 
     public Country getCountryDetails(String aCountry)
@@ -697,97 +696,75 @@ public class App
         }
     }
 
-
     /**
-     * Returns a list of languages for a given country
+     * Country Name
+     *
+     * Returns the country name based on the
+     * country code
      */
-
-    public ArrayList<CountryLanguage> getLanguage(Country aCountry)
+    public String getCountryName(String aCountryCode)
     {
-
-        String countryName = aCountry.name;
         try
         {
-            Statement s = con.createStatement();
+            String countryName = "";
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
 
+            // Create string for SQL statement
             String strSelect =
-                    "SELECT country.Name, countryLanguage.Language, countryLanguage.percentage"
-                            + "FROM country JOIN countryLanguage ON (country.Code = countryLanguage.CountryCode)"
-                            + "WHERE country.Name = '" + aCountry.name + "' "
-                            + "AND countryLanguage.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic')"
-                            + "ORDER BY countryLanguage.Language ";
+                    "SELECT country.Name "
+                            + "FROM country "
+                            + "WHERE country.Code = '" + aCountryCode + "' ";
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            // Extract Country information
 
-
-            ResultSet r = s.executeQuery(strSelect);
-
-            ArrayList<CountryLanguage> languages = new ArrayList<>();
-            while(r.next())
+            while (rset.next())
             {
-                CountryLanguage language = new CountryLanguage();
-                language.code = r.getString("language.Code");
-                language.isOfficial = r.getBoolean("language.IsOfficial");
-                language.language = r.getString("language.Name");
-                language.percentage = r.getFloat("language.Percentage");
-                languages.add(language);
+                countryName = rset.getString("country.Name");
             }
-
-            return languages;
+            return countryName;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get list of languages");
+            System.out.println("Failed to get country name");
             return null;
         }
     }
-//
-//    public ArrayList<CountryLanguage> getLanguagesContinent(String continent, int limit)
-//    {
-//        String condition = "WHERE country.Continent = '" + continent + "'";
-//
-//        return getLanguage(condition, limit);
-//    }
-//
-//    public ArrayList<CountryLanguage> getLanguagesRegion(String region, int limit)
-//    {
-//        String condition = "WHERE country.Regon = '" + region + "'";
-//
-//        return getLanguage(condition, limit);
-//    }
-//
-//    public ArrayList<CountryLanguage> getLanguagesCountry(String country, int limit)
-//    {
-//        String condition = "WHERE country.Name = '" + country + "'";
-//
-//        return getLanguage(condition, limit);
-//    }
 
-    public void displayLanguages(ArrayList<CountryLanguage> languages)
+    /**
+     * World Population
+     *
+     * Returns the population of the world
+     */
+    @RequestMapping("world_population")
+    public PopulationInfo getWorldPopulation()
     {
-        if (languages == null)
+        try
         {
-            System.out.println("No Languages found");
-            return;
-        }
-
-        for(CountryLanguage l : languages)
-        {
-            if(l == null)
+            // Create an SQL statement
+            Statement stmnt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT SUM(country.Population) AS Population "
+                            + "FROM country ";
+            // Execute SQL statement
+            ResultSet rset = stmnt.executeQuery(strSelect);
+            PopulationInfo popInfo = new PopulationInfo();
+            while (rset.next())
             {
-                continue;
+                popInfo.name = "World";
+                popInfo.population = rset.getLong("Population");
             }
-
-            String id = l.code;
-            String language = l.language;
-            boolean isOfficial = l.isOfficial;
-            float percentage = l.percentage;
-
-            String languageString = id + " " +
-                    language +  " " +
-                    isOfficial +  " " +
-                    percentage + "% ";
-
-            System.out.println(languageString);
+            return popInfo;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population details");
+            return null;
         }
     }
+
 }

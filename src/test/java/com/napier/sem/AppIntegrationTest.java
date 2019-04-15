@@ -22,7 +22,7 @@ public class AppIntegrationTest
     }
 
     @Test
-    void testGet()
+    void testGetCity()
     {
         City aCity = app.getCity(1);
         // Expected Results
@@ -161,4 +161,13 @@ public class AppIntegrationTest
         int outputSize = app.getRegionsPopulationReport().size();
         assertTrue(outputSize>5);
     }
+
+    @Test
+    void testWorldPopulation()
+    {
+        PopulationInfo world = app.getWorldPopulation();
+        assertEquals(world.name,"World");
+        assertEquals(world.population, 6078749450L);
+    }
+
 }
