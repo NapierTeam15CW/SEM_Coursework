@@ -8,7 +8,7 @@
 - Code Coverage Develop [![codecov](https://codecov.io/gh/NapierTeam15CW/SEM_Coursework/branch/develop/graph/badge.svg)](https://codecov.io/gh/NapierTeam15CW/SEM_Coursework)
 
 ## Requirements Met
-### 31 requirements of 32 have been implemented, which is 96.875%.
+### 32 requirements of 32 have been implemented, which is 100.00%.
 | ID    | Name | Met  | Screenshot |
 |-------|------|------|------------|
 | 1 | All the countries in the world organised by largest population to smallest. | Yes |  |
@@ -42,4 +42,4 @@
 | 29 | The population of a country. | Yes |  |
 | 30 | The population of a district. | Yes |  |
 | 31 | The population of a city. | Yes |  |
-| 32 | Language report | No |  |
+| 32 | Language report | Yes |  |

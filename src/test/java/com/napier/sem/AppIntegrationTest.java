@@ -184,4 +184,20 @@ public class AppIntegrationTest {
         int outputSize = cities.size();
         assertEquals(3,outputSize);
     }
+
+    @Test
+    void testLanguageReport()
+    {
+        ArrayList<CountryLanguage> languages = app.getLanguageReport();
+        int outputSize = languages.size();
+        // Check that there are only 5 results
+        assertEquals(5 ,outputSize);
+        // Check that the most spoken language is Chinese
+        String langName = languages.get(0).language;
+        long langPeople = languages.get(0).numberOfPeople;
+        double langWorldPercent = languages.get(0).percentageOfWorld;
+        assertEquals(langName, "Chinese");
+        assertEquals(langPeople, 1191843539L);
+        assertEquals(langWorldPercent, 19.60672378540039);
+    }
 }

@@ -948,4 +948,56 @@ public class App
         return getCities(searchCondition, "-1");
     }
 
+    /**
+     * Language Report
+     *
+     * Returns the number of people and
+     * the percentage of people in the world
+     * that speak either Arabic, Chinese, English,
+     * Hindi and Spanish
+     */
+    @RequestMapping("language_report")
+    public ArrayList<CountryLanguage> getLanguageReport()
+    {
+        ArrayList<PopulationInfo> world = new ArrayList<>();
+        world = getWorldPopulation();
+        long worldPopulation = world.get(0).population;
+
+        try
+        {
+            // Create SQL Statement
+            Statement s = con.createStatement();
+            // SQL statement
+            String strSelect =
+                    "SELECT countrylanguage.Language, ROUND(SUM(country.Population * (countrylanguage.Percentage / 100)), 0) AS No_Of_People "
+                            + "FROM country JOIN countrylanguage ON (country.Code = countrylanguage.CountryCode) "
+                            + "WHERE countrylanguage.Language IN ('Arabic', 'Chinese', 'English', 'Hindi', 'Spanish') "
+                            + "GROUP BY countrylanguage.language "
+                            + "ORDER BY No_Of_People DESC ";
+            // Execute SQL Statement
+            ResultSet r = s.executeQuery(strSelect);
+            // New languages array list
+            ArrayList<CountryLanguage> languages = new ArrayList<>();
+            // Add language details for language report
+            while(r.next())
+            {
+                // New CountryLanguage report
+                CountryLanguage lang = new CountryLanguage();
+                // Add information from database
+                lang.language = r.getString("countrylanguage.Language");
+                lang.numberOfPeople = r.getLong("No_Of_People");
+                lang.percentageOfWorld = (r.getFloat("No_Of_People") / worldPopulation) * 100;
+                // Add language to the languages array list
+                languages.add(lang);
+            }
+            // Return languages
+            return languages;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get list of languages");
+            return null;
+        }
+    }
 }
