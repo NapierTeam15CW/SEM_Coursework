@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Group 15: SEM Coursework</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <style>
+        th, td, p, input
+        {
+            font:14px Verdana;
+        }
+        table, th, td
+        {
+            border: solid 1px #DDD;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th
+        {
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Group 15: SEM Coursework</h1>
+<p>Arran Smedley</p>
+<p>Calum Mathison</p>
+<p>Stephen Weatherhead</p>
+<p>Graeme White</p>
+
+<h2>Links</h2>
+<a href="https://github.com/NapierTeam15CW/SEM_Coursework">GitHub Repo</a><br>
+
+<h2>App Links</h2>
+<a href="/app/countries?limit=-1">Country Report - All countries</a><br>
+<a href="/app/countries_continent?continent=Asia&limit=15">Country Report - Continent = Asia, limit = 15</a><br>
+<a href="/app/countries_region?region=North%20America&limit=20">Country Report - Region = North America, limit = 20</a><br>
+<a href="/app/cities?limit=-1">City Report - All cities</a><br>
+<a href="/app/cities_continent?continent=Asia&limit=16">City Report - Continent = Asia, limit 16</a><br>
+<a href="/app/cities_region?region=North%20America&limit=25">City Report - Region = North America, limit 25</a><br>
+<a href="/app/cities_district?district=Colorado&limit=35">City Report - District = Colorado, list 35</a><br>
+<a href="/app/cities_country?country=United%20Kingdom&limit=30">City Report - District = Colorado, list 30</a><br>
+
+<h2>Web Front-End Links</h2>
+<a href="/countries.html?limit=-1">Country Report - All countries</a><br>
+<a href="/countries_continent.html?continent=Asia&limit=15">Country Report - Continent = Asia, limit = 15</a><br>
+<a href="/countries_region.html?region=North%20America&limit=20">Country Report - Region = North America, limit = 20</a><br>
+<a href="/cities.html?limit=-1">City Report - All cities</a><br>
+<a href="/cities_continent.html?continent=Asia&limit=16">City Report - Continent = Asia, limit 16</a><br>
+<a href="/cities_region.html?region=North%20America&limit=25">City Report - Region = North America, limit 25</a><br>
+<a href="/cities_district.html?district=Colorado&limit=35">City Report - District = Colorado, list 35</a><br>
+<a href="/cities_country.html?country=United%20Kingdom&limit=30">City Report - District = Colorado, list 30</a><br>
+
+
+
+<h2>Date and Time</h2>
+<div class="mypanel"></div>
+
+</body>
+
+<script>
+    $.getJSON('http://time.jsontest.com', function(data) {
+
+        var text = `The current date is: ${data.date}<br>
+                    The current time: ${data.time}<br>
+                    Unix time: ${data.milliseconds_since_epoch}`
+
+        var text
+
+
+        $(".mypanel").html(text);
+    });
+</script>
+
+</html>

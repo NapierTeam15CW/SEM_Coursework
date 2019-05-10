@@ -131,7 +131,7 @@ public class AppTest {
         testCity2.CountryName = "Bulgaria";
         testCity2.Population = 333333;
 
-        testCity3.Name = "Racoon City";
+        testCity3.Name = "Racoon City"; /** YES XD **/
         testCity3.District = "Missouri";
         testCity3.CountryName = "North America";
         testCity3.Population = 1234321;
